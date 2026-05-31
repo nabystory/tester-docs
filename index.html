@@ -32,7 +32,7 @@
     tr:hover td { background: #fafff8; }
     .checklist { list-style: none; margin: 10px 0; }
     .checklist li { font-size: 13.5px; color: #333; padding: 5px 0 5px 26px; position: relative; }
-    .checklist li::before { content: "☐"; position: absolute; left: 0; color: #aaa; font-size: 15px; }
+    .checklist li::before { content: "&#9744;"; position: absolute; left: 0; color: #aaa; font-size: 15px; }
     .support { margin-top: 52px; padding-top: 24px; border-top: 1px solid #e8e8e8; font-size: 13px; color: #666; }
     .support strong { color: #333; }
     .step + .step { border-top: 1px solid #f0f0f0; padding-top: 44px; }
@@ -147,26 +147,23 @@ apiBaseUrl: http://20.196.220.238:4000</div>
       <h3 style="font-size:15px;font-weight:700;color:#111;margin-bottom:8px;">Option A &mdash; You have your own Anthropic API key</h3>
       <p style="font-size:14px;color:#444;margin-bottom:6px;">One-time setup. After this you can type <code style="background:#f2f2f2;padding:2px 6px;border-radius:3px;">use-proxy</code> or <code style="background:#f2f2f2;padding:2px 6px;border-radius:3px;">use-direct</code> in any terminal to switch instantly.</p>
 
-      <p style="font-size:13px;color:#666;margin-bottom:6px;margin-top:14px;"><strong>Step 1</strong> &mdash; Open <strong>Windows PowerShell</strong> from the Start menu (search "powershell"). Run these three commands one at a time. Replace the two placeholder keys with your actual keys before running.</p>
+      <p style="font-size:13px;color:#666;margin-bottom:6px;margin-top:14px;"><strong>Step 1</strong> &mdash; Copy the script below into <strong>Notepad</strong> (or any text editor). Replace the two placeholder keys with your actual keys, then copy the whole edited block.</p>
 
-      <p style="font-size:12px;color:#888;margin-bottom:4px;">Create the profile folder:</p>
-      <div class="code-block">md $env:USERPROFILE\Documents\PowerShell -Force</div>
+      <div class="code-block">$prof = "$env:USERPROFILE\Documents\PowerShell\Microsoft.PowerShell_profile.ps1"
+md "$env:USERPROFILE\Documents\PowerShell" -Force | Out-Null
+Add-Content $prof 'function use-proxy { claude config set -g apiKey "sk-your-virtual-key"; claude config set -g apiBaseUrl "http://20.196.220.238:4000"; Write-Host "Switched to: Proxy Mode" }'
+Add-Content $prof 'function use-direct { claude config set -g apiKey "sk-ant-your-personal-key"; claude config set -g apiBaseUrl ""; Write-Host "Switched to: Direct Mode" }'
+Write-Host "Done. Close this window and open a new terminal to use use-proxy / use-direct."</div>
 
-      <p style="font-size:12px;color:#888;margin-bottom:4px;margin-top:10px;">Add the proxy switch command (replace key):</p>
-      <div class="code-block">Add-Content $env:USERPROFILE\Documents\PowerShell\Microsoft.PowerShell_profile.ps1 'function use-proxy { claude config set -g apiKey "sk-your-virtual-key"; claude config set -g apiBaseUrl "http://20.196.220.238:4000"; Write-Host "Switched to: Proxy Mode" }'</div>
-
-      <p style="font-size:12px;color:#888;margin-bottom:4px;margin-top:10px;">Add the personal account switch command (replace key):</p>
-      <div class="code-block">Add-Content $env:USERPROFILE\Documents\PowerShell\Microsoft.PowerShell_profile.ps1 'function use-direct { claude config set -g apiKey "sk-ant-your-personal-key"; claude config set -g apiBaseUrl ""; Write-Host "Switched to: Direct Mode" }'</div>
-
-      <div class="box box-info" style="margin-top:12px;">
+      <div class="box box-info" style="margin-top:8px;margin-bottom:16px;">
         <div class="box-icon">&#8505;&#65039;</div>
-        <div>These commands use single quotes <code>'...'</code> &mdash; copy-paste safe, no quote conversion issues. The double quotes inside are written literally to the file.</div>
+        <div>Edit the two keys in Notepad before copying &mdash; do <strong>not</strong> run the script with the placeholder text still in it.</div>
       </div>
 
-      <p style="font-size:13px;color:#666;margin-bottom:4px;margin-top:16px;"><strong>Step 2</strong> &mdash; Close this PowerShell window and open a new one.</p>
-      <p style="font-size:13px;color:#444;margin-bottom:16px;">PowerShell loads the profile automatically on startup &mdash; no extra command needed.</p>
+      <p style="font-size:13px;color:#666;margin-bottom:6px;"><strong>Step 2</strong> &mdash; Open <strong>Windows PowerShell</strong> from the Start menu (search "powershell"). Paste the edited script and press <strong>Enter</strong>.</p>
+      <p style="font-size:13px;color:#444;margin-bottom:16px;">You should see <em>"Done. Close this window&hellip;"</em> &mdash; that means it worked.</p>
 
-      <p style="font-size:13px;color:#666;margin-bottom:4px;"><strong>Step 3</strong> &mdash; Test it. In the new terminal, type:</p>
+      <p style="font-size:13px;color:#666;margin-bottom:6px;"><strong>Step 3</strong> &mdash; Close PowerShell and open a new terminal. Type:</p>
       <div class="code-block">use-proxy</div>
       <p style="font-size:13px;color:#444;">You should see <em>"Switched to: Proxy Mode"</em>. The commands work in any new terminal from now on &mdash; PowerShell, VS Code terminal, or Windows Terminal.</p>
     </div>
