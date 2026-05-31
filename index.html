@@ -43,7 +43,7 @@
 
   <div class="header">
     <div class="label">Internal Tester Guide</div>
-    <h1>Claude Code Setup — Windows &amp; VS Code</h1>
+    <h1>Claude Code Setup &mdash; Windows &amp; VS Code</h1>
     <div class="subtitle">Connect VS Code to the shared AI proxy. Estimated setup time: 5 minutes.</div>
   </div>
 
@@ -55,11 +55,11 @@
         <h2>Prerequisites</h2>
         <p>Make sure these are already installed before continuing.</p>
         <ul style="font-size:14px;color:#444;padding-left:20px;line-height:2;">
-          <li><strong>VS Code</strong> — <a href="https://code.visualstudio.com" target="_blank" style="color:#0066cc;">code.visualstudio.com</a></li>
-          <li><strong>Claude Code extension</strong> — search <em>"Claude Code"</em> in the VS Code Extensions panel (Ctrl+Shift+X) and install the one by Anthropic</li>
+          <li><strong>VS Code</strong> &mdash; <a href="https://code.visualstudio.com" target="_blank" style="color:#0066cc;">code.visualstudio.com</a></li>
+          <li><strong>Claude Code extension</strong> &mdash; search <em>"Claude Code"</em> in the VS Code Extensions panel (Ctrl+Shift+X) and install the one by Anthropic</li>
         </ul>
         <div class="box box-info" style="margin-top:14px;">
-          <div class="box-icon">ℹ️</div>
+          <div class="box-icon">&#8505;&#65039;</div>
           <div>You do <strong>not</strong> need an Anthropic account or a personal API key. Your access key will be provided by the admin.</div>
         </div>
       </div>
@@ -71,9 +71,9 @@
         <h2>Get your Access Key</h2>
         <p>You will receive a personal access key from the admin that looks like this:</p>
         <div class="code-block">sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</div>
-        <p>Each key has a monthly spending limit. When the limit is reached, the key stops working until the next billing cycle — you won't be charged anything personally.</p>
+        <p>Each key has a monthly spending limit. When the limit is reached, the key stops working until the next billing cycle &mdash; you won't be charged anything personally.</p>
         <div class="box box-warn">
-          <div class="box-icon">⚠️</div>
+          <div class="box-icon">&#9888;&#65039;</div>
           <div>Keep your key private. Do not share it or commit it to any repository. If you think your key has been exposed, contact the admin immediately for a replacement.</div>
         </div>
       </div>
@@ -84,17 +84,14 @@
       <div class="step-content">
         <h2>Configure Claude Code</h2>
         <p>Open the VS Code integrated terminal (<strong>Ctrl + `</strong>) and run these two commands. Replace the placeholder with your actual key from Step 2.</p>
-        <div class="code-block"><span class="code-comment"># Set your access key (replace with your actual key)</span>
-claude config set -g apiKey "sk-your-key-from-admin"
-
-<span class="code-comment"># Point Claude Code to the shared proxy</span>
+        <div class="code-block">claude config set -g apiKey "sk-your-key-from-admin"
 claude config set -g apiBaseUrl "http://20.196.220.238:4000"</div>
         <div class="box box-info">
-          <div class="box-icon">ℹ️</div>
-          <div><strong>Why this method?</strong> <code>claude config set</code> stores your key in a secure settings file backed by the Windows Credential Manager — not in plaintext system variables. It is safer and only accessible to Claude Code.</div>
+          <div class="box-icon">&#8505;&#65039;</div>
+          <div><strong>Why this method?</strong> <code>claude config set</code> stores your key in a secure settings file &mdash; safer than plaintext system variables, and only accessible to Claude Code.</div>
         </div>
         <div class="box box-warn">
-          <div class="box-icon">⚠️</div>
+          <div class="box-icon">&#9888;&#65039;</div>
           <div>Run these commands in the <strong>VS Code terminal</strong>, not PowerShell or Command Prompt opened separately.</div>
         </div>
       </div>
@@ -110,7 +107,7 @@ claude config set -g apiBaseUrl "http://20.196.220.238:4000"</div>
         <div class="code-block">apiKey: sk-your-key-here
 apiBaseUrl: http://20.196.220.238:4000</div>
         <div class="box box-warn">
-          <div class="box-icon">⚠️</div>
+          <div class="box-icon">&#9888;&#65039;</div>
           <div>If <code>apiBaseUrl</code> is missing or blank, re-run the second command from Step 3 and check for typos.</div>
         </div>
       </div>
@@ -122,7 +119,7 @@ apiBaseUrl: http://20.196.220.238:4000</div>
         <h2>Test Claude Code</h2>
         <p>Open the Claude Code panel in VS Code and send a message. If you see a response, setup is complete. No restart is required.</p>
         <div class="box box-ok">
-          <div class="box-icon">✅</div>
+          <div class="box-icon">&#9989;</div>
           <div><strong>You're all set.</strong> Your usage is being tracked and will stay within your assigned budget automatically.</div>
         </div>
         <p style="margin-top:16px;"><strong>Quick checklist:</strong></p>
@@ -137,69 +134,69 @@ apiBaseUrl: http://20.196.220.238:4000</div>
       </div>
     </div>
 
-  </div><!-- /steps -->
+  </div>
 
   <!-- SWITCHING SECTION -->
   <div style="margin-top:52px;padding-top:36px;border-top:2px solid #e8e8e8;">
     <div style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#888;margin-bottom:8px;">Optional</div>
     <h2 style="font-size:20px;font-weight:700;color:#111;margin-bottom:10px;">Switching Between the Proxy and Your Personal Claude Account</h2>
-    <p style="font-size:14px;color:#555;margin-bottom:24px;">If you also have your own Anthropic API key or a claude.ai subscription, you can set up Desktop shortcuts to switch between the two instantly.</p>
+    <p style="font-size:14px;color:#555;margin-bottom:24px;">If you also have your own Anthropic API key or a claude.ai subscription, you can set up <code>use-proxy</code> / <code>use-direct</code> commands to switch between the two instantly from any terminal.</p>
 
     <!-- Option A -->
     <div style="margin-bottom:32px;">
       <h3 style="font-size:15px;font-weight:700;color:#111;margin-bottom:8px;">Option A &mdash; You have your own Anthropic API key</h3>
-      <p style="font-size:14px;color:#444;margin-bottom:16px;">Create two small shortcut files on your Desktop. Double-clicking one switches your active mode instantly — no terminal commands needed.</p>
+      <p style="font-size:14px;color:#444;margin-bottom:6px;">One-time setup. After this you can type <code style="background:#f2f2f2;padding:2px 6px;border-radius:3px;">use-proxy</code> or <code style="background:#f2f2f2;padding:2px 6px;border-radius:3px;">use-direct</code> in any terminal to switch instantly.</p>
 
-      <p style="font-size:13px;color:#666;margin-bottom:6px;"><strong>Step 1</strong> &mdash; Right-click your Desktop &rarr; <strong>New &rarr; Text Document</strong>. Name it <code style="background:#f2f2f2;padding:2px 5px;border-radius:3px;">switch-to-proxy.bat</code></p>
-      <p style="font-size:13px;color:#555;margin-bottom:12px;">When Windows asks <em>"Are you sure you want to change the file extension?"</em> &mdash; click <strong>Yes</strong>.</p>
+      <p style="font-size:13px;color:#666;margin-bottom:6px;margin-top:14px;"><strong>Step 1</strong> &mdash; Open <strong>Windows PowerShell</strong> from the Start menu (search "powershell"). Run these three commands one at a time. Replace the two placeholder keys with your actual keys before running.</p>
 
-      <p style="font-size:13px;color:#666;margin-bottom:6px;"><strong>Step 2</strong> &mdash; Right-click the file &rarr; <strong>Edit</strong>. Paste this content, replace the key with your actual virtual key, then save (<strong>Ctrl+S</strong>):</p>
-      <div class="code-block">@echo off
-claude config set -g apiKey "sk-your-virtual-key-from-admin"
-claude config set -g apiBaseUrl "http://20.196.220.238:4000"
-echo Switched to Proxy Mode
-pause</div>
+      <p style="font-size:12px;color:#888;margin-bottom:4px;">Create the profile folder:</p>
+      <div class="code-block">md $env:USERPROFILE\Documents\PowerShell -Force</div>
 
-      <p style="font-size:13px;color:#666;margin-bottom:6px;margin-top:16px;"><strong>Step 3</strong> &mdash; Repeat Steps 1&ndash;2 for a second file named <code style="background:#f2f2f2;padding:2px 5px;border-radius:3px;">switch-to-personal.bat</code> with this content:</p>
-      <div class="code-block">@echo off
-claude config set -g apiKey "sk-ant-your-personal-key"
-claude config set -g apiBaseUrl ""
-echo Switched to Personal Account
-pause</div>
+      <p style="font-size:12px;color:#888;margin-bottom:4px;margin-top:10px;">Add the proxy switch command (replace key):</p>
+      <div class="code-block">Add-Content $env:USERPROFILE\Documents\PowerShell\Microsoft.PowerShell_profile.ps1 'function use-proxy { claude config set -g apiKey "sk-your-virtual-key"; claude config set -g apiBaseUrl "http://20.196.220.238:4000"; Write-Host "Switched to: Proxy Mode" }'</div>
 
-      <p style="font-size:13px;color:#444;margin-top:14px;"><strong>To switch modes:</strong> double-click the relevant file on your Desktop. A window opens briefly, applies the change, then waits for you to press a key to close. No restart needed — Claude Code picks up the change immediately.</p>
+      <p style="font-size:12px;color:#888;margin-bottom:4px;margin-top:10px;">Add the personal account switch command (replace key):</p>
+      <div class="code-block">Add-Content $env:USERPROFILE\Documents\PowerShell\Microsoft.PowerShell_profile.ps1 'function use-direct { claude config set -g apiKey "sk-ant-your-personal-key"; claude config set -g apiBaseUrl ""; Write-Host "Switched to: Direct Mode" }'</div>
+
       <div class="box box-info" style="margin-top:12px;">
-        <div class="box-icon">ℹ️</div>
-        <div>The <code>pause</code> line keeps the window open so you can read the confirmation. Press any key to dismiss it.</div>
+        <div class="box-icon">&#8505;&#65039;</div>
+        <div>These commands use single quotes <code>'...'</code> &mdash; copy-paste safe, no quote conversion issues. The double quotes inside are written literally to the file.</div>
       </div>
+
+      <p style="font-size:13px;color:#666;margin-bottom:4px;margin-top:16px;"><strong>Step 2</strong> &mdash; Close this PowerShell window and open a new one.</p>
+      <p style="font-size:13px;color:#444;margin-bottom:16px;">PowerShell loads the profile automatically on startup &mdash; no extra command needed.</p>
+
+      <p style="font-size:13px;color:#666;margin-bottom:4px;"><strong>Step 3</strong> &mdash; Test it. In the new terminal, type:</p>
+      <div class="code-block">use-proxy</div>
+      <p style="font-size:13px;color:#444;">You should see <em>"Switched to: Proxy Mode"</em>. The commands work in any new terminal from now on &mdash; PowerShell, VS Code terminal, or Windows Terminal.</p>
     </div>
 
     <!-- Option B -->
     <div style="margin-bottom:12px;">
       <h3 style="font-size:15px;font-weight:700;color:#111;margin-bottom:8px;">Option B &mdash; You use a claude.ai subscription (OAuth login)</h3>
-      <p style="font-size:14px;color:#444;margin-bottom:12px;">Claude Code can only use one auth method at a time. Switching requires a manual login/logout step inside VS Code.</p>
+      <p style="font-size:14px;color:#444;margin-bottom:12px;">Claude Code can only use one auth method at a time. Use the commands below &mdash; no manual login/logout required in most cases.</p>
       <table>
-        <thead><tr><th>Direction</th><th>Steps</th></tr></thead>
+        <thead><tr><th>Direction</th><th>Command to run in terminal</th></tr></thead>
         <tbody>
           <tr>
             <td>Personal &rarr; Proxy</td>
-            <td style="font-size:13.5px;">1. In Claude Code, run <code style="background:#f2f2f2;padding:1px 5px;border-radius:3px;">/logout</code><br>2. Double-click <code style="background:#f2f2f2;padding:1px 5px;border-radius:3px;">switch-to-proxy.bat</code> on Desktop</td>
+            <td style="font-size:13.5px;"><code style="background:#f2f2f2;padding:1px 5px;border-radius:3px;">use-proxy</code> (set up in Option A above)</td>
           </tr>
           <tr>
             <td>Proxy &rarr; Personal</td>
-            <td style="font-size:13.5px;">1. Double-click <code style="background:#f2f2f2;padding:1px 5px;border-radius:3px;">switch-to-personal.bat</code> on Desktop<br>2. In Claude Code, sign in with your claude.ai account</td>
+            <td style="font-size:13.5px;"><code style="background:#f2f2f2;padding:1px 5px;border-radius:3px;">use-direct</code> &mdash; clears the proxy key and URL; Claude Code automatically falls back to your existing claude.ai session</td>
           </tr>
         </tbody>
       </table>
       <div class="box box-warn" style="margin-top:14px;">
-        <div class="box-icon">⚠️</div>
-        <div>If you see <em>"Auth conflict: both a token and an API key are set"</em> in Claude Code, run <code>/logout</code> inside Claude Code to clear the conflict, then re-apply the mode you want.</div>
+        <div class="box-icon">&#9888;&#65039;</div>
+        <div>If you see <em>"Auth conflict: both a token and an API key are set"</em> after switching, run <code>/logout</code> inside Claude Code once to clear it, then run <code>use-proxy</code> or <code>use-direct</code> again.</div>
       </div>
     </div>
   </div>
 
   <div class="support">
-    <strong>Need help?</strong> If you encounter any issues or your key stops working, contact the admin. Do not attempt to create a new Anthropic account or API key — all access is managed through the shared proxy.
+    <strong>Need help?</strong> If you encounter any issues or your key stops working, contact the admin. Do not attempt to create a new Anthropic account or API key &mdash; all access is managed through the shared proxy.
   </div>
 
 </div>
