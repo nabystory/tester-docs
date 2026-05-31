@@ -114,6 +114,37 @@
     .box-warn  { background: #fff8ec; border: 1px solid #f5d78e; color: #7a4f00; }
     .box-ok    { background: #f0faf2; border: 1px solid #a8ddb5; color: #1a5c2a; }
 
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13.5px;
+      margin: 14px 0;
+    }
+    th {
+      background: #f2f2f2;
+      text-align: left;
+      padding: 9px 14px;
+      font-weight: 600;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #555;
+      border: 1px solid #e0e0e0;
+    }
+    td {
+      padding: 9px 14px;
+      border: 1px solid #e0e0e0;
+      vertical-align: top;
+    }
+    td:first-child {
+      font-family: "Cascadia Code", "Consolas", monospace;
+      font-size: 12.5px;
+      color: #c7254e;
+      background: #fafafa;
+      white-space: nowrap;
+    }
+    tr:hover td { background: #fafff8; }
+
     .checklist { list-style: none; margin: 10px 0; }
     .checklist li {
       font-size: 13.5px;
@@ -152,7 +183,6 @@
 
   <div class="steps">
 
-    <!-- STEP 1 -->
     <div class="step">
       <div class="step-number">1</div>
       <div class="step-content">
@@ -169,7 +199,6 @@
       </div>
     </div>
 
-    <!-- STEP 2 -->
     <div class="step">
       <div class="step-number">2</div>
       <div class="step-content">
@@ -184,7 +213,6 @@
       </div>
     </div>
 
-    <!-- STEP 3 -->
     <div class="step">
       <div class="step-number">3</div>
       <div class="step-content">
@@ -199,30 +227,24 @@ claude config set -g apiBaseUrl "http://20.196.220.238:4000"</div>
 
         <div class="box box-info">
           <div class="box-icon">ℹ️</div>
-          <div>
-            <strong>Why this method?</strong> <code>claude config set</code> stores your key in a secure settings file backed by the Windows Credential Manager — not in plaintext system variables. It is safer and only accessible to Claude Code.
-          </div>
+          <div><strong>Why this method?</strong> <code>claude config set</code> stores your key in a secure settings file backed by the Windows Credential Manager — not in plaintext system variables. It is safer and only accessible to Claude Code.</div>
         </div>
-
         <div class="box box-warn">
           <div class="box-icon">⚠️</div>
-          <div>Run these commands in the <strong>VS Code terminal</strong>, not PowerShell or Command Prompt opened separately. This ensures the commands run in the correct context.</div>
+          <div>Run these commands in the <strong>VS Code terminal</strong>, not PowerShell or Command Prompt opened separately.</div>
         </div>
       </div>
     </div>
 
-    <!-- STEP 4 -->
     <div class="step">
       <div class="step-number">4</div>
       <div class="step-content">
         <h2>Verify the Configuration</h2>
-        <p>In the same VS Code terminal, confirm both settings were saved:</p>
+        <p>In the same terminal, confirm both settings were saved:</p>
         <div class="code-block">claude config list</div>
-
         <p>You should see output that includes:</p>
         <div class="code-block">apiKey: sk-your-key-here
 apiBaseUrl: http://20.196.220.238:4000</div>
-
         <div class="box box-warn">
           <div class="box-icon">⚠️</div>
           <div>If <code>apiBaseUrl</code> is missing or blank, re-run the second command from Step 3 and check for typos.</div>
@@ -230,18 +252,15 @@ apiBaseUrl: http://20.196.220.238:4000</div>
       </div>
     </div>
 
-    <!-- STEP 5 -->
     <div class="step">
       <div class="step-number">5</div>
       <div class="step-content">
         <h2>Test Claude Code</h2>
         <p>Open the Claude Code panel in VS Code and send a message. If you see a response, setup is complete. No restart is required.</p>
-
         <div class="box box-ok">
           <div class="box-icon">✅</div>
           <div><strong>You're all set.</strong> Your usage is being tracked and will stay within your assigned budget automatically.</div>
         </div>
-
         <p style="margin-top:16px;"><strong>Quick checklist:</strong></p>
         <ul class="checklist">
           <li>Claude Code extension installed</li>
@@ -255,6 +274,67 @@ apiBaseUrl: http://20.196.220.238:4000</div>
     </div>
 
   </div><!-- /steps -->
+
+  <!-- SWITCHING SECTION -->
+  <div style="margin-top:52px; padding-top:36px; border-top:2px solid #e8e8e8;">
+    <div style="font-size:11px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:#888; margin-bottom:8px;">Optional</div>
+    <h2 style="font-size:20px; font-weight:700; color:#111; margin-bottom:10px;">Switching Between the Proxy and Your Personal Claude Account</h2>
+    <p style="font-size:14px; color:#555; margin-bottom:24px;">If you also have your own Anthropic API key or a claude.ai subscription, you can switch between the two at any time using PowerShell shortcuts.</p>
+
+    <div style="margin-bottom:32px;">
+      <h3 style="font-size:15px; font-weight:700; color:#111; margin-bottom:8px;">Option A &mdash; You have your own Anthropic API key</h3>
+      <p style="font-size:14px; color:#444; margin-bottom:10px;">Add these two functions to your PowerShell profile so they're available in every terminal session.</p>
+
+      <p style="font-size:13px; color:#666; margin-bottom:6px;"><strong>Step 1</strong> &mdash; Open your PowerShell profile file:</p>
+      <div class="code-block">notepad $PROFILE</div>
+
+      <p style="font-size:13px; color:#666; margin-bottom:6px; margin-top:14px;"><strong>Step 2</strong> &mdash; Paste these functions and save the file:</p>
+      <div class="code-block"><span class="code-comment"># Switch to the shared proxy (uses your virtual key)</span>
+function Use-Proxy {
+    claude config set -g apiKey "sk-your-virtual-key-from-admin"
+    claude config set -g apiBaseUrl "http://20.196.220.238:4000"
+    Write-Host "Switched to: Proxy Mode"
+}
+
+<span class="code-comment"># Switch to your personal Anthropic API key</span>
+function Use-MyAccount {
+    claude config set -g apiKey "sk-ant-your-personal-key"
+    claude config set -g apiBaseUrl ""
+    Write-Host "Switched to: Personal Account"
+}</div>
+
+      <p style="font-size:13px; color:#666; margin-bottom:6px; margin-top:14px;"><strong>Step 3</strong> &mdash; Reload your profile:</p>
+      <div class="code-block">. $PROFILE</div>
+
+      <p style="font-size:14px; color:#444; margin-top:12px;">From now on, type <code style="background:#f2f2f2; padding:2px 6px; border-radius:3px; font-size:12.5px;">Use-Proxy</code> or <code style="background:#f2f2f2; padding:2px 6px; border-radius:3px; font-size:12.5px;">Use-MyAccount</code> in any terminal to switch instantly. No restart needed.</p>
+    </div>
+
+    <div style="margin-bottom:12px;">
+      <h3 style="font-size:15px; font-weight:700; color:#111; margin-bottom:8px;">Option B &mdash; You use a claude.ai subscription (OAuth login)</h3>
+      <p style="font-size:14px; color:#444; margin-bottom:12px;">Claude Code can only use one auth method at a time. Switching requires a manual login/logout step inside VS Code.</p>
+
+      <table>
+        <thead>
+          <tr><th>Direction</th><th>Steps</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Personal → Proxy</td>
+            <td style="font-size:13.5px;">1. In Claude Code, run <code style="background:#f2f2f2; padding:1px 5px; border-radius:3px;">/logout</code><br>2. Run <code style="background:#f2f2f2; padding:1px 5px; border-radius:3px;">Use-Proxy</code> in terminal (set up above)</td>
+          </tr>
+          <tr>
+            <td>Proxy → Personal</td>
+            <td style="font-size:13.5px;">1. Run <code style="background:#f2f2f2; padding:1px 5px; border-radius:3px;">claude config set -g apiKey ""</code> in terminal<br>2. In Claude Code, sign in with your claude.ai account</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="box box-warn" style="margin-top:14px;">
+        <div class="box-icon">⚠️</div>
+        <div>If you see <em>"Auth conflict: both a token and an API key are set"</em> in Claude Code, run <code>/logout</code> inside Claude Code to clear the conflict, then re-apply the mode you want.</div>
+      </div>
+    </div>
+  </div>
 
   <div class="support">
     <strong>Need help?</strong> If you encounter any issues or your key stops working, contact the admin. Do not attempt to create a new Anthropic account or API key — all access is managed through the shared proxy.
