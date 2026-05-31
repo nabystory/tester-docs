@@ -22,7 +22,6 @@
       padding: 48px 52px 80px;
     }
 
-    /* Header */
     .header {
       border-bottom: 2px solid #e8e8e8;
       padding-bottom: 28px;
@@ -47,7 +46,6 @@
       color: #555;
     }
 
-    /* Steps */
     .steps { counter-reset: step; }
 
     .step {
@@ -87,7 +85,6 @@
       margin-bottom: 12px;
     }
 
-    /* Code blocks */
     .code-block {
       background: #f7f7f7;
       border: 1px solid #e0e0e0;
@@ -101,39 +98,8 @@
       white-space: pre;
     }
 
-    /* Table */
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 13.5px;
-      margin: 14px 0;
-    }
-    th {
-      background: #f2f2f2;
-      text-align: left;
-      padding: 9px 14px;
-      font-weight: 600;
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: #555;
-      border: 1px solid #e0e0e0;
-    }
-    td {
-      padding: 9px 14px;
-      border: 1px solid #e0e0e0;
-      vertical-align: top;
-    }
-    td:first-child {
-      font-family: "Cascadia Code", "Consolas", monospace;
-      font-size: 12.5px;
-      color: #c7254e;
-      background: #fafafa;
-      white-space: nowrap;
-    }
-    tr:hover td { background: #fafff8; }
+    .code-comment { color: #888; }
 
-    /* Info / warning boxes */
     .box {
       border-radius: 6px;
       padding: 13px 16px;
@@ -148,38 +114,6 @@
     .box-warn  { background: #fff8ec; border: 1px solid #f5d78e; color: #7a4f00; }
     .box-ok    { background: #f0faf2; border: 1px solid #a8ddb5; color: #1a5c2a; }
 
-    /* Navigation path */
-    .nav-path {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 13px;
-      background: #f7f7f7;
-      border: 1px solid #e0e0e0;
-      border-radius: 5px;
-      padding: 7px 12px;
-      margin: 10px 0;
-      flex-wrap: wrap;
-    }
-    .nav-path span {
-      font-weight: 600;
-      color: #222;
-    }
-    .nav-path .sep { color: #aaa; font-size: 12px; }
-
-    /* Inline key pill */
-    .key-placeholder {
-      display: inline-block;
-      background: #fff3cd;
-      border: 1px dashed #e6a817;
-      border-radius: 4px;
-      padding: 2px 8px;
-      font-family: "Cascadia Code", "Consolas", monospace;
-      font-size: 12.5px;
-      color: #7a4f00;
-    }
-
-    /* Verification checks */
     .checklist { list-style: none; margin: 10px 0; }
     .checklist li {
       font-size: 13.5px;
@@ -195,7 +129,6 @@
       font-size: 15px;
     }
 
-    /* Support footer */
     .support {
       margin-top: 52px;
       padding-top: 24px;
@@ -205,7 +138,6 @@
     }
     .support strong { color: #333; }
 
-    /* Divider between steps */
     .step + .step { border-top: 1px solid #f0f0f0; padding-top: 44px; }
   </style>
 </head>
@@ -256,41 +188,25 @@
     <div class="step">
       <div class="step-number">3</div>
       <div class="step-content">
-        <h2>Set Environment Variables</h2>
-        <p>Claude Code reads two environment variables to know where to send requests. Set them at the Windows user level so all applications pick them up automatically.</p>
+        <h2>Configure Claude Code</h2>
+        <p>Open the VS Code integrated terminal (<strong>Ctrl + `</strong>) and run these two commands. Replace the placeholder with your actual key from Step 2.</p>
 
-        <p><strong>Open Environment Variables:</strong></p>
-        <div class="nav-path">
-          <span>Win + R</span>
-          <div class="sep">→</div>
-          <span>sysdm.cpl</span>
-          <div class="sep">→</div>
-          <span>Advanced</span>
-          <div class="sep">→</div>
-          <span>Environment Variables</span>
-        </div>
+        <div class="code-block"><span class="code-comment"># Set your access key (replace with your actual key)</span>
+claude config set -g apiKey "sk-your-key-from-admin"
 
-        <p style="margin-top:14px;">Under <strong>User variables</strong>, click <strong>New</strong> and add these two entries:</p>
-
-        <table>
-          <thead>
-            <tr><th>Variable Name</th><th>Value</th></tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>ANTHROPIC_API_KEY</td>
-              <td><span class="key-placeholder">sk-your-key-provided-by-admin</span></td>
-            </tr>
-            <tr>
-              <td>ANTHROPIC_BASE_URL</td>
-              <td>http://20.196.220.238:4000</td>
-            </tr>
-          </tbody>
-        </table>
+<span class="code-comment"># Point Claude Code to the shared proxy</span>
+claude config set -g apiBaseUrl "http://20.196.220.238:4000"</div>
 
         <div class="box box-info">
           <div class="box-icon">ℹ️</div>
-          <div><strong>ANTHROPIC_BASE_URL</strong> tells Claude Code to route requests through the shared proxy instead of directly to Anthropic. This is what enables usage tracking and budget limits.</div>
+          <div>
+            <strong>Why this method?</strong> <code>claude config set</code> stores your key in a secure settings file backed by the Windows Credential Manager — not in plaintext system variables. It is safer and only accessible to Claude Code.
+          </div>
+        </div>
+
+        <div class="box box-warn">
+          <div class="box-icon">⚠️</div>
+          <div>Run these commands in the <strong>VS Code terminal</strong>, not PowerShell or Command Prompt opened separately. This ensures the commands run in the correct context.</div>
         </div>
       </div>
     </div>
@@ -299,13 +215,18 @@
     <div class="step">
       <div class="step-number">4</div>
       <div class="step-content">
-        <h2>Restart VS Code</h2>
-        <p>Environment variables are read when an application launches. You must fully close and reopen VS Code for the changes to take effect.</p>
-        <ol style="font-size:14px; color:#444; padding-left:20px; line-height:2.2;">
-          <li>Close all VS Code windows</li>
-          <li>Wait a moment for the process to exit completely</li>
-          <li>Reopen VS Code</li>
-        </ol>
+        <h2>Verify the Configuration</h2>
+        <p>In the same VS Code terminal, confirm both settings were saved:</p>
+        <div class="code-block">claude config list</div>
+
+        <p>You should see output that includes:</p>
+        <div class="code-block">apiKey: sk-your-key-here
+apiBaseUrl: http://20.196.220.238:4000</div>
+
+        <div class="box box-warn">
+          <div class="box-icon">⚠️</div>
+          <div>If <code>apiBaseUrl</code> is missing or blank, re-run the second command from Step 3 and check for typos.</div>
+        </div>
       </div>
     </div>
 
@@ -313,28 +234,8 @@
     <div class="step">
       <div class="step-number">5</div>
       <div class="step-content">
-        <h2>Verify the Setup</h2>
-        <p>Open the VS Code integrated terminal (<strong>Ctrl + `</strong>) and run:</p>
-        <div class="code-block">echo $env:ANTHROPIC_BASE_URL
-echo $env:ANTHROPIC_API_KEY</div>
-
-        <p>Expected output:</p>
-        <div class="code-block">http://20.196.220.238:4000
-sk-your-key-here</div>
-
-        <div class="box box-warn">
-          <div class="box-icon">⚠️</div>
-          <div>If either line is blank, the environment variable was not saved correctly. Close VS Code, re-check Step 3, and reopen.</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- STEP 6 -->
-    <div class="step">
-      <div class="step-number">6</div>
-      <div class="step-content">
         <h2>Test Claude Code</h2>
-        <p>Open the Claude Code panel in VS Code and send a message. If you see a response, setup is complete.</p>
+        <p>Open the Claude Code panel in VS Code and send a message. If you see a response, setup is complete. No restart is required.</p>
 
         <div class="box box-ok">
           <div class="box-icon">✅</div>
@@ -344,10 +245,10 @@ sk-your-key-here</div>
         <p style="margin-top:16px;"><strong>Quick checklist:</strong></p>
         <ul class="checklist">
           <li>Claude Code extension installed</li>
-          <li>ANTHROPIC_API_KEY set to provided key</li>
-          <li>ANTHROPIC_BASE_URL set to proxy address</li>
-          <li>VS Code restarted after setting variables</li>
-          <li>Environment variables visible in terminal</li>
+          <li>Access key received from admin</li>
+          <li><code>claude config set -g apiKey</code> completed</li>
+          <li><code>claude config set -g apiBaseUrl</code> completed</li>
+          <li><code>claude config list</code> shows both values</li>
           <li>Claude Code responds to a test message</li>
         </ul>
       </div>
