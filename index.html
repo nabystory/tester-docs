@@ -143,47 +143,35 @@ apiBaseUrl: http://20.196.220.238:4000</div>
   <div style="margin-top:52px;padding-top:36px;border-top:2px solid #e8e8e8;">
     <div style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#888;margin-bottom:8px;">Optional</div>
     <h2 style="font-size:20px;font-weight:700;color:#111;margin-bottom:10px;">Switching Between the Proxy and Your Personal Claude Account</h2>
-    <p style="font-size:14px;color:#555;margin-bottom:24px;">If you also have your own Anthropic API key or a claude.ai subscription, you can set up one-word shortcuts to switch between the two instantly.</p>
+    <p style="font-size:14px;color:#555;margin-bottom:24px;">If you also have your own Anthropic API key or a claude.ai subscription, you can set up Desktop shortcuts to switch between the two instantly.</p>
 
     <!-- Option A -->
     <div style="margin-bottom:32px;">
       <h3 style="font-size:15px;font-weight:700;color:#111;margin-bottom:8px;">Option A &mdash; You have your own Anthropic API key</h3>
-      <p style="font-size:14px;color:#444;margin-bottom:16px;">This is a one-time setup. You will create a file that PowerShell loads automatically every time a terminal opens.</p>
+      <p style="font-size:14px;color:#444;margin-bottom:16px;">Create two small shortcut files on your Desktop. Double-clicking one switches your active mode instantly — no terminal commands needed.</p>
 
-      <p style="font-size:13px;color:#666;margin-bottom:6px;"><strong>Step 1</strong> &mdash; Create the profile folder if it doesn't exist yet.</p>
-      <p style="font-size:13px;color:#444;margin-bottom:6px;">Open PowerShell from the <strong>Start menu</strong> (search "PowerShell") and run:</p>
-      <div class="code-block">New-Item -ItemType Directory -Force -Path "$HOME\Documents\PowerShell"</div>
-      <div class="box box-info" style="margin-top:4px;margin-bottom:16px;">
+      <p style="font-size:13px;color:#666;margin-bottom:6px;"><strong>Step 1</strong> &mdash; Right-click your Desktop &rarr; <strong>New &rarr; Text Document</strong>. Name it <code style="background:#f2f2f2;padding:2px 5px;border-radius:3px;">switch-to-proxy.bat</code></p>
+      <p style="font-size:13px;color:#555;margin-bottom:12px;">When Windows asks <em>"Are you sure you want to change the file extension?"</em> &mdash; click <strong>Yes</strong>.</p>
+
+      <p style="font-size:13px;color:#666;margin-bottom:6px;"><strong>Step 2</strong> &mdash; Right-click the file &rarr; <strong>Edit</strong>. Paste this content, replace the key with your actual virtual key, then save (<strong>Ctrl+S</strong>):</p>
+      <div class="code-block">@echo off
+claude config set -g apiKey "sk-your-virtual-key-from-admin"
+claude config set -g apiBaseUrl "http://20.196.220.238:4000"
+echo Switched to Proxy Mode
+pause</div>
+
+      <p style="font-size:13px;color:#666;margin-bottom:6px;margin-top:16px;"><strong>Step 3</strong> &mdash; Repeat Steps 1&ndash;2 for a second file named <code style="background:#f2f2f2;padding:2px 5px;border-radius:3px;">switch-to-personal.bat</code> with this content:</p>
+      <div class="code-block">@echo off
+claude config set -g apiKey "sk-ant-your-personal-key"
+claude config set -g apiBaseUrl ""
+echo Switched to Personal Account
+pause</div>
+
+      <p style="font-size:13px;color:#444;margin-top:14px;"><strong>To switch modes:</strong> double-click the relevant file on your Desktop. A window opens briefly, applies the change, then waits for you to press a key to close. No restart needed — Claude Code picks up the change immediately.</p>
+      <div class="box box-info" style="margin-top:12px;">
         <div class="box-icon">ℹ️</div>
-        <div>This creates the folder <strong>C:\Users\YourName\Documents\PowerShell\</strong> — safe to run even if the folder already exists.</div>
+        <div>The <code>pause</code> line keeps the window open so you can read the confirmation. Press any key to dismiss it.</div>
       </div>
-
-      <p style="font-size:13px;color:#666;margin-bottom:6px;"><strong>Step 2</strong> &mdash; Open the profile file in Notepad.</p>
-      <p style="font-size:13px;color:#444;margin-bottom:4px;">In the same PowerShell window, run:</p>
-      <div class="code-block">notepad "$HOME\Documents\PowerShell\Microsoft.PowerShell_profile.ps1"</div>
-      <p style="font-size:13px;color:#555;margin-bottom:16px;">Notepad will open. If it asks <em>"Do you want to create a new file?"</em> — click <strong>Yes</strong>.</p>
-
-      <p style="font-size:13px;color:#666;margin-bottom:6px;"><strong>Step 3</strong> &mdash; Paste the block below into Notepad. Replace the two placeholder keys with your actual keys, then save the file (<strong>Ctrl+S</strong>) and close Notepad.</p>
-      <div class="code-block"># Switch to the shared proxy
-function Use-Proxy {
-    claude config set -g apiKey "sk-your-virtual-key-from-admin"
-    claude config set -g apiBaseUrl "http://20.196.220.238:4000"
-    Write-Host "Switched to: Proxy Mode"
-}
-
-# Switch to your personal Anthropic API key
-function Use-MyAccount {
-    claude config set -g apiKey "sk-ant-your-personal-key"
-    claude config set -g apiBaseUrl ""
-    Write-Host "Switched to: Personal Account"
-}</div>
-
-      <p style="font-size:13px;color:#666;margin-bottom:4px;margin-top:16px;"><strong>Step 4</strong> &mdash; Close the PowerShell window and open a new one.</p>
-      <p style="font-size:13px;color:#444;margin-bottom:16px;">PowerShell loads the profile file automatically on every startup — no extra command needed.</p>
-
-      <p style="font-size:13px;color:#666;margin-bottom:4px;"><strong>Step 5</strong> &mdash; Test it. In the new terminal, type:</p>
-      <div class="code-block">Use-Proxy</div>
-      <p style="font-size:13px;color:#444;">You should see <em>"Switched to: Proxy Mode"</em>. From now on, type <code style="background:#f2f2f2;padding:2px 6px;border-radius:3px;">Use-Proxy</code> or <code style="background:#f2f2f2;padding:2px 6px;border-radius:3px;">Use-MyAccount</code> in any new terminal to switch instantly.</p>
     </div>
 
     <!-- Option B -->
@@ -194,12 +182,12 @@ function Use-MyAccount {
         <thead><tr><th>Direction</th><th>Steps</th></tr></thead>
         <tbody>
           <tr>
-            <td>Personal → Proxy</td>
-            <td style="font-size:13.5px;">1. In Claude Code, run <code style="background:#f2f2f2;padding:1px 5px;border-radius:3px;">/logout</code><br>2. In a terminal, run <code style="background:#f2f2f2;padding:1px 5px;border-radius:3px;">Use-Proxy</code> (if set up above)</td>
+            <td>Personal &rarr; Proxy</td>
+            <td style="font-size:13.5px;">1. In Claude Code, run <code style="background:#f2f2f2;padding:1px 5px;border-radius:3px;">/logout</code><br>2. Double-click <code style="background:#f2f2f2;padding:1px 5px;border-radius:3px;">switch-to-proxy.bat</code> on Desktop</td>
           </tr>
           <tr>
-            <td>Proxy → Personal</td>
-            <td style="font-size:13.5px;">1. In a terminal, run <code style="background:#f2f2f2;padding:1px 5px;border-radius:3px;">claude config set -g apiKey ""</code><br>2. In Claude Code, sign in with your claude.ai account</td>
+            <td>Proxy &rarr; Personal</td>
+            <td style="font-size:13.5px;">1. Double-click <code style="background:#f2f2f2;padding:1px 5px;border-radius:3px;">switch-to-personal.bat</code> on Desktop<br>2. In Claude Code, sign in with your claude.ai account</td>
           </tr>
         </tbody>
       </table>
